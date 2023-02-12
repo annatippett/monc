@@ -20,9 +20,11 @@ complete re-write of the Met Office LEM using modern software design with
 a flexible plug 'n play component based architecture with a focus on high
 performance computing (HPC) scaling and efficiency.  '
 
-# Compiling and Running on Leeds ARC machines
+# Compiling and Running on Imperial HPC
 
-To make compilation more simple on the ARC systems, a script called `monc_compile_arc.sh` has been written which loads the necessary modules and compiles MONC using fcm. A second script, `submonc.sge`, can be used to submit a MONC task using the command `qsub submonc.sge` and similarly loads the required modules before submitting the job.
+A script called `monc_compile_arc_imperial.sh` has been written which loads the necessary modules and compiles MONC using fcm -> in utils/arc
+
+
 
 ### MPI libraries and compilers on ARC
 
