@@ -1,0 +1,32 @@
+#!/bin/bash
+#PBS -N MONC
+#PBS -l select=1:ncpus=128:mem=250gb:mpiprocs=64
+#PBS -l walltime=04:00:00
+
+
+##############################################################
+#### THIS IS AN EXAMPLE SCRIPT TO DEMONSTRATE HOW TO      ####
+#### SUBMIT A STANDARD monc JOB WITHOUT A RESTART         ####
+#### Script assumes that there are directories called     ####
+#### monc_stdout , checkpoint_files and diagnostic_files  ####
+#### If these do not exist, MONC will fail                ####
+##############################################################
+
+echo "Starting job: $PBS_JOBID"
+echo "Running on `cat $PBS_NODEFILE | sort | uniq | wc -l` node(s)"
+echo "Running on `cat $PBS_NODEFILE | wc -l` cores"
+
+module purge
+module load tools/dev
+module load netCDF-Fortran/4.5.2-gompi-2019b
+module load FFTW/3.3.8-gompi-2019b
+
+# Change to the direcotry that the job was submitted from
+cd $PBS_O_WORKDIR
+
+# set env variables for submission command
+config_path='./testcases/radiative_convective_equilibrium/RCE_nocasim.mcf'
+checkpoint_fn="./checkpoint_files/RCE_dump.nc"
+
+mpirun -n 64 ./build/bin/monc_driver.exe --config=$config_path  --checkpoint_file=$checkpoint_fn &> monc_stdout/output_RCE_dump_${PBS_JOBID}
+

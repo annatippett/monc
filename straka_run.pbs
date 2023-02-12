@@ -1,0 +1,35 @@
+#!/bin/bash
+#PBS -N MONC-straka
+#PBS -l select=1:ncpus=4:mem=1gb:mpiprocs=4
+#PBS -l walltime=00:30:00
+
+
+############################################################## 
+#### THIS IS AN EXAMPLE SCRIPT TO DEMONSTRATE HOW TO      ####
+#### SUBMIT A STANDARD monc JOB WITHOUT A RESTART         ####
+#### Script assumes that there are directories called     ####
+#### monc_stdout , checkpoint_files and diagnostic_files  ####
+#### If these do not exist, MONC will fail                ####
+##############################################################
+
+echo "Starting job: $PBS_JOBID"
+echo "Running on `cat $PBS_NODEFILE | sort | uniq | wc -l` node(s)"
+echo "Running on `cat $PBS_NODEFILE | wc -l` cores"
+
+module purge
+module load tools/dev
+module load netCDF-Fortran/4.5.2-gompi-2019b
+module load FFTW/3.3.8-gompi-2019b
+
+# Change to the direcotry that the job was submitted from
+cd $PBS_O_WORKDIR
+
+# set env variables for submission command
+config_path='./testcases/tank_experiments/straka.mcf'
+
+# checkpoint_fn="./checkpoint_files/straka_dump.nc"
+
+# Decreasing to 32 cores as memory requirements are increasing. 
+# mpirun -n 4 ./build/bin/monc_driver.exe --config=$config_path  --checkpoint_file=$checkpoint_fn &> monc_stdout/output_straka_dump_${PBS_JOBID}
+# mpirun -n 4 ./build/bin/monc_driver.exe --config=$config_path
+mpirun -n 4 build/bin/monc_driver.exe --config=tests/straka_short.mcf

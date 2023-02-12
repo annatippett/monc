@@ -1,0 +1,10 @@
+Starting job: 6828364.pbs
+Running on 1 node(s)
+Running on 4 cores
+[INFO] MONC running with 3 processes, 1 IO server(s)
+[WARN] No enabled configuration for component ideal_squall therefore disabling this
+[WARN] No enabled configuration for component kid_testcase therefore disabling this
+[WARN] Run order callback for component tank_experiments at stage initialisation not specified
+[WARN] Run order callback for component tank_experiments at stage finalisation not specified
+[INFO] Decomposed 3 processes via 'TwoDim' into z=1 y=3 x=1
+[INFO] 3D system; z=65, y=512, x=2
